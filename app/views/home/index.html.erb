@@ -1,0 +1,95 @@
+<%# ログインをしていない場合の処理%>
+<% if session[:user_info] == nil then%>
+<div class="login_page">
+    <p>SpotifyのアカウントにログインしてMoodifyを始めましょう</p>
+    <%= link_to "Login with Spotify", "/auth/spotify", class:"login_Spotify" %>
+</div>
+
+<%# ログインをしている場合%>
+<% else %>
+
+<%# ローディング画面%>
+<div id="loading-screen-before">
+  <div class="loader"></div>
+  <p>ミックス中...</p>
+</div>
+
+<%# このフォームの情報が、playlist_controller.rbのcreateメソッドに渡される%>
+<div class="home_content">
+    <form action="playlist/create" method="post" id="myform">
+      <p>作成するプレイリストの曲数を選択してください</p>
+        <div class="user_interface">
+            <label> 
+                10 <input type="range" id="limit" name="limit" min="10" max="100" value="30"> 100
+            </label>
+            <p id="song-limit"></p>
+        <p>  
+        </div>
+        <p>
+        
+        <div id="selected_element" style="display:block">
+            <div class="nowrap">
+                <p>"位置情報を取得" ボタンを押して、位置情報を取得してください</p>
+            </div>
+            <input type="hidden" formaction="playlist/get_track_list" id="latitude" name="latitude" readonly>
+            <input type="hidden" formaction="playlist/get_track_list" id="longitude" name="longitude" readonly>
+
+            <div class="user_interface">
+              <p><input class="button_home" type="button" value="位置情報を取得" id="locationButton" ></p>
+              <span id="location-exists">未取得✕</span>
+            </div>
+        </div>
+        <p>
+
+        <input type="checkbox" formaction="playlist/get_track_list" id="check" name="check_value" onclick="checkfunction()">
+        <label for="check" id="select_text_label">位置情報を使いたくない場合はここをクリック！</label>
+        <p>プレイリストのURLを入れてください</p>
+        <div id="playlistURL" class="url_input">
+            <p id="url1">
+                <label> URL1
+                    <input type="text" class="playlist_url" name="url1" placeholder="https://open.spotify.com/playlist/...">
+                </label>
+            </p>
+            <p id="url2">
+                <label> URL2
+                    <input type="text" class="playlist_url" name="url2" placeholder="https://open.spotify.com/playlist/...">
+                </label>
+            </p>
+
+        <%# ブラウザでは表示されないが、ここでプレイリストの作成に必要なユーザー情報を格納している%>
+            <input type="hidden" value="<%= session[:user_info] %>" name="user-info">
+        </div>
+        
+        <br>
+        <div class="user_interface">
+            <input class="button_home" type="button" value="URLを追加" id="addURL">
+            <input class="button_home" type="button" value="URLを削除" id="removeURL">
+        </div>
+
+        <br>
+
+        <%#関数checkData (フォームが全て入力されているか調べる関数)が、ボタンを押すと実行される%>
+        <%#この関数は、views/layoutrs/application.html.erbに定義されている%>
+        
+        <div class="user_interface">
+            <input class="button_home" type="submit" value="作成！" onclick="return checkData();">
+        </div>
+        <br><br><br>
+        <input type="checkbox" id="manual-parameter" name="manual-parameter" onclick="manualParameter()">
+        <label for="manual-parameter" id="select_text_label">パラメータをマニュアルに設定</label>
+        <div id="manual-parameter-section" style="display:none;">
+          <label><input type="radio" name="season" value="summer">夏</label>
+          <label><input type="radio" name="season" value="winter">冬</label>
+          <label><input type="radio" name="season" value="normal" checked>それ以外</label>
+          <br>
+          <label><input type="radio" name="weather" value="sunny" checked>晴れ</label>
+          <label><input type="radio" name="weather" value="rainy">雨</label>
+          <br>
+          <label><input type="radio" name="day" value="day" checked>日中</label>
+          <label><input type="radio" name="day" value="night">夜</label>
+        </div>
+    </form>
+</div>
+<%# /app/javascript/packs/home/index.js%>
+<%= javascript_pack_tag 'home/index' %>
+<%end%>

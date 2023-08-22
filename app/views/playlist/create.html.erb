@@ -1,0 +1,111 @@
+<%# フォームからアクセスしていない場合、エラー画面を表示 %>
+<% if params["user-info"] == nil%>
+<div id="error-section">
+  <h1>エラー</h1>
+  <p>不正なアクセスです。トップページに戻ってやり直してください。</p>
+  <%= link_to "トップページに戻る", "/" %>
+</div>
+<% else %>
+
+<%# ローディング画面 %>
+<div id="loading-screen-before">
+  <div class="loader"></div>
+  <p>プレイリスト作成中...</p>
+</div>
+
+<p class="create-playlist-message">ドラッグアンドドロップで曲の並び替え、クリックで曲を除外することができます。</p>
+<div class="track-message">
+  <p class="track-red-message">一致した曲</p>
+  <p class="track-green-message">プレイリストに含まれる曲を元に推薦された曲</p>
+  <p class="track-gray-message">一致したアーティストの曲</p>
+  <p class="track-blue-message">プレイリストに含まれるアーティストを元に推薦された曲</p>
+</div>
+<table class="track-table">
+<tr>
+  <thead>
+    <th class="track-id"></th>
+    <th>アルバム</th>
+    <th>曲名</th>
+    <th>アーティスト</th>
+    <th class="duration">🕐</th>
+    <th>プレビュー</th>
+  </thead>
+</tr>
+<tbody id="sort-table">
+<% @tracks.zip(@durations, @tr_list) do |track, duration, tr|%>
+  <%= tr.html_safe %>
+    <td class="track-id">
+      <%=track.id%>
+    </td>
+    <td class="album">
+      <img src="<%= track.album.images()[1]["url"]%>" width="48" height="48">
+    </td>
+    <td class="track_name">
+      <%=track.name%>
+    </td>
+    <td class="artists">
+      <%=track.artists().map{|artist| artist.name}.join(", ")%>
+    </td>
+    <td class="duration">
+      <%=duration%>
+    </span>
+    <td class="preview-url">
+      <% if track.preview_url != nil%>
+        <% preview_class = "play " + track.preview_url %>
+        <span class="<%=preview_class%>">▶</span>
+      <% else %>
+        <span class="disable">✕</span>
+      <% end %>
+    </td>
+  </tr>
+<%end%>
+</tbody>
+</table>
+
+<%#ここに、除外されていない曲の数と、再生時間の合計が表示される%>
+<div id="playlistLength">
+</div>
+
+<%# ここのフォームで入力した情報が、playlist_controller.rbのconfirmに渡される%>
+<div id="confirm-section">
+  <form action="confirm" method="post">
+    <%#この後、プレイリストを作るために、プレイリストのID一覧が記述されている(直接見えない)%>
+    <input type="hidden" id = "track-id" value = "" name="track-ids">
+    <p>
+      <input type="input" id="playlist-name" name="playlist-name" placeholder="プレイリスト名を入力してください" required>
+    </p>
+    <%#ログインしているユーザーの表示名。直接見えないようになっている%>
+    <input type="input" id="creator-name" name="creator-name" value="<%= @user_name%>" readonly hidden>
+    <%#関数checkData (フォームが全て入力されているか調べる関数)が、ボタンを押すと実行される%>
+    <%#この関数は、views/layoutrs/application.html.erbに定義されている%>
+    <input type="submit"  id="confirm-button" value="プレイリストを完成させる！" onclick="return checkNameForm();">
+  </form>
+</div>
+<br><br><br><br>
+<form action="create" method="post" id="myform">
+  <% url_count = 1 %>
+  <input type="hidden" name="limit" value="<%= params["limit"] %>">
+  <% @url_list.each do |url| %>
+    <input type="hidden" name="<%= "url#{url_count}"%>" value="<%= @id_list[url_count-1]%>">
+    <% url_count+=1%>
+  <%end%>
+  <input type="hidden" name="latitude" value=<%=params["latitude"]%>>
+  <input type="hidden" name="longitude" value=<%=params["longitude"]%>>
+  <input type="hidden" name="check_value" value="<%=params["check_value"]%>">
+  <input type="hidden" value="<%= $user_info %>" name="user-info">
+  <input class="button_home" type="submit" value="再生成">
+  <label><input type="radio" name="season" value="summer">夏</label>
+  <label><input type="radio" name="season" value="winter">冬</label>
+  <label><input type="radio" name="season" value="normal" checked>それ以外</label>
+  <br>
+  <label><input type="radio" name="weather" value="sunny" checked>晴れ</label>
+  <label><input type="radio" name="weather" value="rainy">雨</label>
+  <br>
+  <label><input type="radio" name="day" value="day" checked>日中</label>
+  <label><input type="radio" name="day" value="night">夜</label>
+</form>
+
+<%# /apps/javascript/playlist/script.js%>
+<%= javascript_pack_tag 'playlist/script' %>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<% end %>

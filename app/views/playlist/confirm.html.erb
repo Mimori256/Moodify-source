@@ -1,0 +1,18 @@
+<%#フォームからアクセスしていない場合、エラー画面を表示%>
+<% if params["playlist-name"] == nil%>
+  <div id="error-section">
+    <h1>エラー</h1>
+    <p>不正なアクセスです。トップページに戻ってやり直してください。</p>
+    <%= link_to "トップページに戻る", "/" %>
+  </div>
+<% else %>
+  <div id="confirm-section">
+    <h1>作成完了</h1>
+    <div id="created-playlist-name"><%= @name%></div>
+    <br>
+    <p>早速聴いてみる！</p>
+    <div id="created-playlist-url"><%= link_to "#{@url}", "#{@url}", target: :__blank, rel: "noopener noreferrer" %></div>
+    <br><br>
+    <%= link_to(image_tag('twitter-share-button.svg', height: "96px", width: "128px"), @twitter_share_link, target: :_blank, rel: "noopener noreferrer") %>
+  </div>
+<% end %>

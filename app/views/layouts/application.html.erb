@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Moodify</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <%= favicon_link_tag('favicon.ico') %>
+  </head>
+
+  <body>
+    <%= render "layouts/header"%>
+    <%= yield %>
+  
+    <script>
+      function checkData() {
+        const check = document.getElementById("check");
+        const urlInputs = document.getElementsByClassName("playlist_url");
+        const inputElements = document.getElementsByTagName("input");
+        let emptyCountAll = 0;
+        let emptyCountUrl = 0;
+
+        for (let i = 0; i < inputElements.length; i++) {
+          if (inputElements[i].value === "") {
+            emptyCountAll++;
+          }
+        }
+
+        for (let i = 0; i < urlInputs.length; i++) {
+          if (urlInputs[i].value === "") {
+            emptyCountUrl++;
+          }
+        }
+
+        if (check.checked) {
+          if (emptyCountUrl !== 0) {
+            alert("URLを入力してください！");
+            return false;
+          } 
+        } else {
+          if (emptyCountAll !== 0) {
+            alert("すべてのフォームを埋めてください！");
+            return false;
+          }
+        }
+        // ローディング画面を表示
+        document.getElementById("loading-screen-before").id = "loading-screen";
+        return true;
+      };
+   
+    // チェックボックスの状態によって位置情報取得ボタンの表示を切り替える
+    function checkfunction() {
+      let check = document.getElementById("check");
+      let selected_element = document.getElementById("selected_element");
+      if (check.checked) {
+        selected_element.style.display = "none";
+        document.getElementById("select_text_label").innerText = "ここをクリックしてムードにあった音楽を聴こう"
+      } 
+      else {
+        selected_element.style.display = "block";
+        document.getElementById("select_text_label").innerText = "位置情報を使いたくない場合はここをクリック！";
+      } 
+    }
+      
+    // ヘッダの今いる場所を少し光らせる
+    // 対応している箇所に、クラスとして "current-section" を付与して実装している
+    const currentLocation = location.pathname;
+    const createPlaylist = document.getElementById("create-playlist");
+    const showPlaylist = document.getElementById("show-playlist");
+
+    // 今いる場所が、プレイリストを作る箇所に関連している場合
+    if (currentLocation === "/" || /.+create$|.+confirm$/.test(currentLocation)) {
+      createPlaylist.classList.add("current-section");
+    // 今いる場所が、プレイリストを見る、編集する箇所に関連している場合
+    } else {
+      showPlaylist.classList.add("current-section");
+    }
+
+    // プレイリスト選択画面で、プレイリストの名前が正しく入力されているか確認する
+    function checkNameForm() {
+      const nameForm = document.getElementById("playlist-name");
+      if (nameForm.value === "") {
+        alert("プレイリストの名前を入力してください！");
+        return false;
+      } else {
+        // ローディング画面を表示
+        document.getElementById("loading-screen-before").id = "loading-screen";
+        return true;
+      }
+    };
+
+    function checktags() {
+      let tags = document.getElementsByName("new_tag_list[]");
+      const invalidChars = ["%", ";", "#", "&"]; //タグに使用できない文字を入れる配列
+
+      for (let i = 0; i < tags.length; i++) {
+        const tagValue = tags[i].value;
+        if (invalidChars.some(char => tagValue.includes(char))) {
+          alert("次の文字列はタグに使用できません\n  [%] [ ; ] [#] [&]");
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function manualParameter() {
+      const manualCheck = document.getElementById("manual-parameter");
+      const manualSection = document.getElementById("manual-parameter-section")
+
+      if (manualCheck.checked) {
+        // 設定用のラジオボタンを表示する
+        manualSection.style.display = "block";
+      } else {
+        manualSection.style.display = "none";
+      }
+    }
+
+    </script>
+  </body>
+</html>

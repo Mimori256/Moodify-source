@@ -1,0 +1,27 @@
+<%#フォームからアクセスしていない場合、エラー画面を表示%>
+<% if params["url"] == nil%>
+  <h1>エラー</h1>
+  <p>不正なアクセスです。トップページに戻ってやり直してください。</p>
+<% else %>
+  <div class = "edit-page">
+    <h2 class = "cp_h1title">編集してください。</h2>
+    <form action = "edit_execute" onsubmit="return checktags()">
+      <p class = "headline">プレイリストの名前</p><input type="text" name="new_playlist_name" class="textbox-001" value="<%=@old_playlist_name%>">
+      <div id="form-block"><%#  JavaScriptの対象領域%>
+        <p class = "headline">タグの名前</p>
+        <%for @old_tag in @old_tag_list%>
+          <div class="item">
+            <%# タグ :  %>
+            <input type="text" name="new_tag_list[]" class="tagForm textbox-001" value="<%=@old_tag%>" maxlength="20">
+            <span class="close-icon">✖</span>
+          </div>
+        <%end%>    
+      </div>
+
+      <button type="button" class="add_button">タグの追加</button> <%# typeをbuttonとすることで送信されない %> 
+      <input class="edit_submit" type="submit" value="決定">
+      <input type="hidden" name="url" value=<%=@url%>>
+    </form>
+  </div>
+<% end %>
+<%= javascript_pack_tag 'playlist/edit' %>

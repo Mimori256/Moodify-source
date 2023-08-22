@@ -1,0 +1,17 @@
+Rails.application.routes.draw do
+  get 'home/index'
+  root 'home#index'
+  get '/auth/:provider/callback'=> 'sessions#create'
+  get 'sessions/destroy'
+  get 'playlist/show'
+  post 'playlist/show'
+  get 'playlist/delete'
+  get 'playlist/edit_confirm'
+  get 'playlist/edit_execute'
+  post 'playlist/create'
+  get 'playlist/create'
+  post 'playlist/confirm'
+  get 'playlist/confirm'
+  get 'playlist/like'
+  get 'playlist/error'
+end

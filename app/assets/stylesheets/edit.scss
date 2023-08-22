@@ -1,0 +1,103 @@
+.close-icon {
+cursor: pointer;
+}
+
+.add_button{
+    -webkit-appearance: none; /*アイフォンでCSSが無効になるのを防ぐ*/
+    margin-top: 30px;
+    display: inline-block;
+    border-radius: 28px;
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    padding: 12px 16px;
+    background: #4d4d4d;
+    color: #fff;
+    line-height: 1em;
+    transition: 0.3s;
+    border: 2px solid #4d4d4d;
+}
+
+.add_button:hover{
+    background: #949494;
+}
+.close-icon:hover {
+    opacity: .7;
+    color: #ff8787;
+}
+
+
+
+// プレイリスト作成完了時のプレイリスト名のレイアウト
+.edit-page{
+    position: relative;
+    padding: 1em 10em;
+    // padding-right: 200em;
+    width: 40%;
+    // text-align: center;
+    display: inline-block;
+    margin-bottom: 1em;
+    
+}
+
+.headline {
+    padding: 0.1em;/*文字周りの余白*/
+    padding-left: 0.5em;/*文字周りの余白*/
+    color: #ffffff;/*文字色*/
+    // background: #292929;/*背景色*/
+    border-left: solid 5px #31f46c;/*左線（実線 太さ 色）*/
+}
+
+.textbox-001-label,
+.textbox-001 {
+    color: #333;
+}
+
+.textbox-001-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: .9em;
+}
+
+.textbox-001 {
+    // width: 100%;
+    margin: 8px;
+    padding: 8px 10px;
+    border: 1px solid #969da3;
+    border-radius: 3px;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.textbox-001::placeholder {
+    color: #999;
+}
+
+.edit_submit {
+    margin-top: 30px;
+    margin-left: 40%;
+    display: inline-block;
+    border-radius: 28px;
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    padding: 12px 16px;
+    background: #247900;
+    color: #ffffff;
+    line-height: 1em;
+    transition: 0.3s;
+    border: 2px solid #247900;
+}
+
+.edit_submit:hover{
+    background:#7aff42;
+    // border:#2e9601;
+}
+
+.cp_h1title {
+	padding: .3em;
+	border-bottom: 3px double #e5f4e6;
+    color: #d5fed9;/*文字色*/
+}

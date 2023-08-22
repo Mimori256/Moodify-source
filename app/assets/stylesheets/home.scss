@@ -1,0 +1,205 @@
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #292929;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#loading-screen-before {
+  display: none !important;
+}
+
+.loader {
+  border: 40px solid #1db954;
+  border-top: 40px solid #292929;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+.message {
+  color: #1db954;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader p {
+  color: #fff;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.login_page {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.login_Spotify {
+  display: block;
+  width: 250px;
+  border-radius: 28px;
+  padding: 15px 0;
+  margin: auto;
+  background: #4d4d4d;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.login_Spotify:hover {
+  background: #fff;
+  color: #292929;
+  border: 2px solid #1db954;
+}
+
+/* index.html.erbのhome_content要素の整列*/
+.home_content {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 500px;
+  font-size: 18px;
+}
+
+/*　ユーザがアクションするものを中央に配置 */
+.user_interface {
+  text-align: center;
+  font-weight: bold;
+}
+
+/*
+スライドバー関連のCSS
+*/
+#limit {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  height: 10px;
+  width: 50%;
+  border-radius: 10px;
+  border: solid 3px #ccc;
+  // -webkit-向けのつまみ
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none; // デフォルトのつまみのスタイルを解除
+    background: #1db954;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+  }
+  // -moz-向けのつまみ
+  &::-moz-range-thumb {
+    background: #1db954;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+  }
+  // Firefoxで点線が周りに表示されてしまう問題の解消
+  &::-moz-focus-outer {
+    border: 0;
+  }
+}
+
+.button_home {
+  display: inline-block;
+  border-radius: 28px;
+  font-size: 14pt;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  padding: 12px 16px;
+  background: #4d4d4d;
+  color: #fff;
+  line-height: 1em;
+  transition: 0.3s;
+  border: 2px solid #4d4d4d;
+}
+
+.button_home:hover {
+  box-shadow: none;
+  color: #4d4d4d;
+  background: #fff;
+  border: 2px solid #1db954;
+}
+
+.url_input {
+  text-align: center;
+  background: #4d4d4d;
+  border-radius: 10px;
+  padding: 3px;
+  font-weight: bold;
+}
+
+/* 改行を無効化するcss*/
+.nowrap {
+  white-space: nowrap;
+}
+
+label[for=check]{
+  cursor: pointer;
+}
+
+/* チェックボックス関連のcss */
+/*リセット */
+input[type="checkbox"]  {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* チェックボックスデザイン */
+input[type="checkbox"] {
+  cursor: pointer;
+  padding-left: 30px;
+  vertical-align: middle;
+  position: relative;
+}
+input[type="checkbox"]::before,
+input[type="checkbox"]::after {
+  content: "";
+  display: block; 
+  position: absolute;
+}
+input[type="checkbox"]::before {
+  background-color: #fff;
+  border-radius: 28px;
+  width: 20px;
+  height: 20px;
+  transform: translateY(-50%);
+  top: 50%;
+  left: 5px;
+}
+input[type="checkbox"]::after {
+  border-bottom: 3px solid #1db954;
+  border-left: 3px solid #1db954;
+  opacity: 0;
+  height: 4px;/*チェックマークの高さ*/
+  width: 9px;/*チェックマークの横幅*/
+  transform: rotate(-45deg);
+  top: -4px;/*チェックマークの位置調整*/
+  left: 9px;/*チェックマークの位置調整*/
+}
+input[type="checkbox"]:checked::after {
+  opacity: 1;
+}

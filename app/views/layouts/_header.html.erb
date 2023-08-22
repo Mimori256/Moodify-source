@@ -1,0 +1,24 @@
+<header>
+  <div id="login-user">
+    <%if session[:user_info] != nil%>
+      <%= session[:user_info]["info"]["display_name"]%>でログイン中
+    <%end%>
+  </div>
+  <nav>
+    <div class="logo">
+      <%= link_to(image_tag('logo.png', height: '160px', width: '240px', id: 'logo'), '/') %>
+    </div>
+    <ul>
+      <li id="create-playlist"><a href="/">プレイリストを作る</a></li>
+      <%#ログイン前の画面だったら%>
+      <%if session[:user_info] == nil and $user_info == nil%>
+        <li id="show-playlist"><%= link_to "プレイリストを見る", "/"%></li>
+        <li><%= link_to "ログアウト", "/sessions/destroy", class:"hidden"%></li>
+      <%else%>
+        <li id="show-playlist"><%= link_to "プレイリストを見る", "/playlist/show"%></li>
+        <li><%= link_to "ログアウト", "/sessions/destroy"%> </li>
+      <%end%>
+    </ul>
+  </nav>
+  <div class="clear"></div>
+</header>

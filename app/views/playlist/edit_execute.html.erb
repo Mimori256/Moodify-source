@@ -1,0 +1,12 @@
+<%#フォームからアクセスしていない場合、エラー画面を表示%>
+<% if params["url"].nil? %>
+  <h1>エラー</h1>
+  <p>不正なアクセスです。トップページに戻ってやり直してください。</p>
+<% elsif not @message.nil? %>
+  <p><%= @message %></p>
+<% else %>
+  <head><META http-equiv="Refresh" content="0.5;URL=/playlist/show"></head>
+  <div class = "edit-page">
+    <p>プレイリストを編集しました。(自動で画面遷移します。)</p><br>
+  </div>
+<% end %>

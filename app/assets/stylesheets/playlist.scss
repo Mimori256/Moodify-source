@@ -1,0 +1,475 @@
+// Place all the styles related to the playlist controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+// 全体の余白調整
+#whole-show-section {
+  margin: 1% 5%;
+}
+
+// エラー画面部分のCSS
+#error-section {
+  text-align: center;
+}
+
+#error-section a {
+  color: #ccc;
+}
+
+#error-section a:hover {
+  color: #1db954;
+}
+
+// プレイリスト一覧表示のCSS
+
+/*色情報を持った変数*/
+:root {
+  --creator_btn: #474978;
+  --tag_btn: #1e6219;
+  --edit_btn: #005eb7;
+  --delete_btn: #f67584;
+}
+
+.playlist-table {
+  background-color: #222;
+  color: white;
+  font-size: 0.8rem;
+  margin-bottom: 1%;
+  width: 100%;
+}
+
+.playlist-table th,
+.playlist-table td {
+  text-align: center;
+}
+
+.playlist-table .created-playlist-name {
+  font-weight: bold;
+}
+
+.playlist-table a {
+  color: #8be4ff;
+}
+
+.playlist-tag,
+.edit-delete {
+  white-space: nowrap;
+}
+
+#selected-tag-section {
+  text-align: center;
+  font-size: larger;
+  font-weight: bolder;
+  margin-bottom: 3%;
+}
+
+.title {
+  padding: 0.3em;
+  color: #d5fed9; /*文字色*/
+}
+
+.border {
+  border-bottom: 3px double #e5f4e6;
+}
+
+.button2_creator_name {
+  background-image: linear-gradient(
+    to bottom,
+    var(--creator_btn),
+    var(--creator_btn)
+  );
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: #ffffff !important;
+  font-size: 0.8rem;
+  padding: 8px 16px 8px 16px;
+  text-decoration: none;
+  vertical-align: bottom;
+  white-space: nowrap;
+  margin-bottom: 2px;
+  display: inline-block; //inlineで上下のmarginが効かないときの対処
+}
+
+.button2_tag,
+.button2_selected_tag {
+  background-image: linear-gradient(to bottom, var(--tag_btn), var(--tag_btn));
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: #ffffff !important;
+  font-size: 0.8rem;
+  padding: 8px 16px 8px 16px;
+  text-decoration: none;
+  vertical-align: bottom;
+  white-space: nowrap;
+  margin-bottom: 2px;
+  display: inline-block; //inlineで上下のmarginが効かないときの対処
+}
+
+.button2_delete,
+.button2_edit {
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: #fff !important;
+  font-size: 0.8rem;
+  padding: 8px 16px 8px 16px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.button2_delete {
+  background-image: linear-gradient(
+    to bottom,
+    var(--delete_btn),
+    var(--delete_btn)
+  );
+}
+
+.button2_edit {
+  background-image: linear-gradient(
+    to bottom,
+    var(--edit_btn),
+    var(--edit_btn)
+  );
+}
+
+#searchSection {
+  text-align: left;
+  margin: 0% 0% 1% 1%;
+}
+
+dialog {
+  background-color: #292929;
+  border-color: #fff;
+  color: #fff;
+  width: 400px;
+  height: 400px;
+  position: sticky;
+  top: 0;
+  float: right;
+}
+
+dialog button {
+  display: inline-block;
+  border-radius: 28px;
+  font-size: 14pt;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  padding: 6px 8px;
+  background: #fff;
+  color: #4d4d4d;
+  line-height: 1em;
+  transition: 0.3s;
+  border: 2px solid #4d4d4d;
+}
+
+#genreCheckboxes {
+  word-break: normal;
+}
+
+#openDialog,
+#show-favorites {
+  display: inline-block;
+  font-size: 18px;
+  vertical-align: bottom;
+  margin-left: 1%;
+}
+
+#openDialog:hover {
+  color: #1db954;
+  cursor: pointer;
+}
+
+#show-favorites a {
+  color: white;
+  text-decoration: none;
+}
+
+#show-favorites a:hover {
+  color: #1db954;
+}
+
+.genreCheckbox {
+  margin-bottom: 5%;
+}
+
+#sort-section {
+  text-align: center;
+  margin-bottom: 0.7%;
+}
+
+#sort-section select {
+  width: 100%;
+  max-width: 200px;
+  height: 30px;
+  line-height: 1.75;
+  color: #333;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  -ms-word-break: normal;
+  word-break: normal;
+}
+
+// ページネーションのCSS
+.pagination {
+  text-align: center;
+}
+
+.pagination a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  color: #1db954;
+}
+
+// プレイリスト一覧表示のレスポンシブデザイン用のCSS
+@media screen and (max-width: 800px) {
+  #openDialog {
+    margin-top: 4%;
+    margin-bottom: 3%;
+  }
+
+  .track-table {
+    width: 100%;
+    height: 36px;
+  }
+
+  .button2_tag,
+  .button2_delete,
+  .button2_edit {
+    background: none;
+    font-size: 1rem;
+    color: #8be4ff !important;
+    text-decoration: underline !important;
+    white-space: nowrap;
+  }
+
+  .playlist-tag {
+    white-space: normal;
+  }
+
+  .edit-delete {
+    white-space: normal;
+  }
+}
+
+/*テキスト入力input設定*/
+
+#search-form {
+  display: inline;
+}
+
+.search-text {
+  -webkit-appearance: none; /*SafariやChromeのデフォルトの設定を無効*/
+  width: 200px; /*テキスト入力エリアの横幅*/
+  height: 40px;
+  padding: 0px 0 0px 60px;
+  border: none;
+  background: #fff image-url("mglass.JPG") no-repeat 17px center;
+  background-size: 25px 25px;
+  // transition: all 0.5s;/*transitionを使ってスムースに伸ばす*/
+  outline: none;
+  cursor: pointer; /*カーソルを指マークに*/
+  box-shadow: 0 2px rgba(6, 0, 1, 0.26);
+}
+
+// プレイリスト選択部分のCSS
+.create-playlist-message {
+  text-align: center;
+}
+
+.track-table {
+  background-color: #111;
+  color: white;
+  font-size: 0.8rem;
+  margin-bottom: 1%;
+  width: 80%;
+  height: 48px;
+  margin: 0 auto;
+}
+
+.track-id {
+  display: none !important;
+}
+
+.track-table td {
+  text-align: center;
+}
+
+.track_name {
+  font-weight: bold;
+}
+
+tr {
+  margin-bottom: 1%;
+}
+
+tr.remove-item {
+  background-color: #ddd;
+}
+
+td {
+  vertical-align: middle;
+}
+
+td.duration {
+  padding: 10px;
+}
+
+td.preview-url {
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+#playlistLength {
+  margin-top: 2%;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+#confirm-section {
+  text-align: center;
+}
+
+#playlist-name {
+  text-align: center;
+  font-size: 30px;
+  width: 600px;
+  height: 100px;
+  background-color: #292929;
+  color: #fff;
+  border: solid 4px gray;
+}
+
+#playlist-name:focus {
+  border: 4px solid #1db954;
+  z-index: 10;
+  outline: 0;
+}
+
+#confirm-button {
+  display: inline-block;
+  border-radius: 28px;
+  font-size: 14pt;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  padding: 6px 8px;
+  background: #4d4d4d;
+  color: #fff;
+  line-height: 1em;
+  transition: 0.3s;
+  border: 2px solid #4d4d4d;
+  margin-bottom: 2%;
+}
+
+#confirm-button:hover {
+  box-shadow: none;
+  color: #4d4d4d;
+  background: #fff;
+  border: 2px solid #1db954;
+}
+
+// メッセージ全体に対する指定
+.track-message {
+  text-align: center;
+  position: sticky;
+  top: 0;
+  font-size: 16px;
+}
+
+.track-red-message,
+.track-green-message,
+.track-gray-message,
+.track-blue-message {
+  border-left: solid 2px #fff;
+  color: #fff;
+  padding: 0.5rem 0.7rem 0.5rem 0.7rem;
+  display: inline-block;
+  margin: 7px;
+}
+
+// 重複した曲
+.track-red,
+.track-red-message {
+  background: #212121; //背景色
+}
+
+// 重複した曲による推薦
+.track-green,
+.track-green-message {
+  background-color: #313131;
+}
+
+// 重複したアーティストの曲
+.track-gray,
+.track-gray-message {
+  background-color: #515151;
+}
+
+// 重複したアーティストによる推薦
+.track-blue,
+.track-blue-message {
+  background-color: #717171;
+}
+
+// プレイリスト作成完了時のプレイリスト名のレイアウト
+#created-playlist-name {
+  position: relative;
+  padding: 1em 2em;
+  text-align: center;
+  display: inline-block;
+  margin-bottom: 1em;
+}
+
+#created-playlist-name:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+}
+
+#created-playlist-name:before {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}
+
+#created-playlist-url {
+  position: relative;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+#created-playlist-url:after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: #1db954;
+  transition: 0.3s;
+  transform: translateX(-50%);
+}
+
+#created-playlist-url:hover:after {
+  width: 100%;
+}
+
+#created-playlist-url a {
+  color: #fff;
+  text-decoration: none;
+}

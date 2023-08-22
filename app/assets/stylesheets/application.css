@@ -1,0 +1,78 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+/*
+ナビゲーションバーに関するCSS
+*/
+
+#login-user {
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+body {
+  background-color: #292929; /* ロゴの背景と同色のものを全体の背景に適用*/
+  color: white; /* ページ全体の文字の色を指定 */
+  align-content: center;
+  font-size: 20px;
+  font-family: "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体",
+    "YuGothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ",
+    "Meiryo", "verdana", sans-serif;
+}
+
+.logo {
+  float: left;
+}
+
+.clear {
+  clear: both;
+}
+
+ul {
+  display: table;
+  width: 80%;
+  text-align: center;
+  font-size: 22px;
+}
+
+li {
+  padding-top: 60px;
+  padding-right: 10px;
+  display: table-cell;
+  min-width: 50px;
+}
+
+li a {
+  display: block;
+  width: 100%;
+  padding: 10px 10px;
+  text-decoration: none;
+  color: #aaa;
+  font-weight: bold;
+}
+
+li.current-section a {
+  color: #fff;
+}
+
+li a:hover {
+  color: #1db954;
+}
+
+.hidden {
+  visibility: hidden;
+  font-weight: bold;
+}

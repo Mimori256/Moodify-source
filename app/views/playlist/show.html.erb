@@ -1,0 +1,101 @@
+<div id="whole-show-section">
+  <dialog id="filterDialog">
+    <div id="dialogContent">
+      <p>ジャンルでプレイリストを絞り込めます</p>
+      <p>チェックされたジャンルのプレイリストが表示されます</p>
+      <div id="genreCheckboxes">
+      <%# 有効なジャンル一覧のチェックボックスが入る%>
+      </div>
+      <button id="removeCheck">すべてのチェックを外す</button>
+      <button id="closeButton">閉じる</button>
+    </div>
+  </dialog>
+  <div id="selected-tag-section">
+    <%if @message_class.nil?%>
+      <span class="title border"><%=@message%></span>
+    <%else%>
+    <span class="title">選択タグ : </span><span class="<%=@message_class%>"><%=@message%></span>
+      
+    <%end%>
+        
+  </div>
+  <div id="searchSection">    
+    <%#<input type="text" placeholder="プレイリスト名・ユーザー名" id="user-search-form" class="search-text">%>
+    <%= form_tag("/playlist/show",:method => 'get', :id => "search-form") do %>
+      <%= text_field_tag :query, "", {class: "search-text", placeholder: "プレイリスト名・ユーザー名"} %>
+    <% end %>
+    <a id="openDialog">タグで絞り込む</a>
+    <span id="show-favorites">
+      <%# すでにお気に入りに追加したプレイリストのみ表示するモードになっている場合は%>
+      <%if @show_favorite%>
+        <%# 代わりにすべてのプレイリストを表示するボタンに切り替える%>
+        <%=link_to  "すべてのプレイリストを表示", "show"%>
+      <%else%>
+        <%=link_to  "お気に入りに追加したプレイリストを表示", "show?favorite=true"%>
+      <%end%>
+    </span>
+  </div>
+  <div id="sort-section">
+    <label for="sort-select">並び順</label>
+    <select name="sort", id="sortMethod">
+      <option value="date">作成日順(デフォルト)</option>
+      <%if @sort_by_favorite%>
+        <option value="favorite" selected="selected">お気に入り数順</option>
+      <%else%>
+        <option value="favorite">お気に入り数順</option>
+      <%end%>
+    </select>
+  </div>
+  <%= paginate @playlists %>
+  <table class="playlist-table" height="100px">
+    <thead>
+      <tr>
+        <th></th>
+        <th>名前</th>
+        <th>作成者</th>
+        <th>URL</th>
+        <th>タグ</th>
+        <th>作成日</th>
+        <th>編集・削除</th>
+        <th>いいね</th>
+        <th>お気に入り数</th>
+      <tr>
+    <tbody>
+      <% @playlists.each do |playlist|%>
+        <tr class="playlist">
+          <td class="playlist-image">
+            <img src="<%=playlist_url_to_image(playlist.url)%>" height="64" width="64"> 
+          </td>
+          <td class="created-playlist-name"><%=playlist.name%></td>
+          <td class="creator-name"><a href="show?user=<%=playlist.creatorId%>" class="button2_creator_name"><%=playlist.creator%></a></td>
+          <td class="playlist-url"><a href="<%=playlist.url%>" target="_blank">URL</a></td>
+          <td class="playlist-tag-section">
+          <% if playlist.tag != nil then %>
+            <% playlist.tag.split(",").each do |tag| %>
+              <span class="playlist-tag"><a href="show?tag=<%=tag%>" class="button2_tag"><%= tag %></a></span>
+            <% end %>
+          <% end %>
+          </td>
+          <td><%=playlist.created_at.strftime("%Y-%m-%d")%></td>
+          <td class="edit-delete">
+            <%# ログインユーザとプレイリストの作成者が同じプレイリストのみ「削除」「編集」を表示 %>
+            <%# 最初にsession[:user_info] がnilかどうか調べておくことで、エラーが起きるのを防いでいる %>
+            <% if session[:user_info] != nil and session[:user_info]["info"]["id"] == Playlist.find_by(url: playlist.url).creatorId %>
+              <a href="edit_confirm?url=<%=playlist.url%>" class="button2_edit">編集</a>
+              <a href="delete?url=<%=playlist.url%>" onclick="return confirm('本当に削除しますか？')" class="button2_delete">削除</a>  
+            <% end %>
+          </td>
+          <td class="table-heart">
+            <%if @favorite_playlists.include?(playlist.url)%>
+              <%= link_to(image_tag('red-heart.svg', height: "40px", width: "40px"), "like?url=#{playlist.url}") %>
+            <%else%>
+              <%= link_to(image_tag('white-heart.svg', height: "40px", width: "40px"), "like?url=#{playlist.url}") %>
+            <%end%>
+          </td>
+          <td class="favorite-count"><%=playlist.favoriteCount%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= javascript_pack_tag 'playlist/show_script' %>
